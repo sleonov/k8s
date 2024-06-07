@@ -1,0 +1,35 @@
+# Ubuntu 20
+# update profile with alias kubectl='minikube kubectl'
+
+# Install kubectl
+
+# Install minikube
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube && rm minikube-linux-amd64
+
+# using docker as driver (cluster name docker)
+sudo apt install docker.io
+sudo usermod -aG docker $USER
+minikube start --driver=docker --cpus=2 --memory=3g -p docker
+
+# using virtualbox as driver (default profile)
+# 2 worker nodes, use this
+sudo apt install virtualbox
+minikube start --driver=virtualbox \
+               --kubernetes-version=v1.28.3 \
+               --container-runtime=containerd \
+               --cni=calico \
+               --cpus=2 --memory=4g --disk-size=4g \
+               -n 3
+
+# Check Vms
+VBoxManage list vms # 1 control plane vm, 2 worker VMs
+
+# verify
+minikube profile virtualbox|docker
+minikube status
+minikube node list
+kubectl version
+minikube profile list
+minikube logs # display k8s start logs
+minikube ssh # login for debugging
