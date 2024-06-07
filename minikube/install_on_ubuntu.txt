@@ -12,7 +12,7 @@ sudo apt install docker.io
 sudo usermod -aG docker $USER
 minikube start --driver=docker --cpus=2 --memory=3g -p docker
 
-# using virtualbox as driver (default profile)
+# or using virtualbox as driver (default profile)
 # 2 worker nodes, use this
 sudo apt install virtualbox
 minikube start --driver=virtualbox \
@@ -33,3 +33,8 @@ kubectl version
 minikube profile list
 minikube logs # display k8s start logs
 minikube ssh # login for debugging
+
+# Install add-ons
+minikube addons list
+minikube addons enable metrics-server
+minikube addons enable dashboard
