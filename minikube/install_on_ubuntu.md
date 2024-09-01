@@ -68,3 +68,16 @@ minikube addons enable dashboard
 # Show dashboard URL
 minikube dashboard --url
 ```
+## Start dashboard and connect
+```
+# On Ubuntu VM:
+minikube dashboard
+kubectl proxy
+
+# On client desktop
+ssh -L 12345:localhost:8001 <user>@<ip-of-ubuntu-vm>
+# On client desktop browser open URL
+# http://localhost:12345/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/
+```
+
+
