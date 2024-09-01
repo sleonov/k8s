@@ -17,23 +17,23 @@ sudo usermod -aG docker $USER
 ```
 
 ## Install with virtualbox as driver (default profile)
-2 Worker nodes, each with:
+1 Control plane, 1 Worker node with:
 CPUs: 2
-RAM: 4GB
-Disk: 40GB
+RAM: 6GB
+Disk: 80GB
 ```
 sudo apt install virtualbox
 minikube start --driver=virtualbox \
-               --kubernetes-version=v1.30 \
-               --container-runtime=containerd \
-               --cni=calico \
-               --cpus=2 --memory=4g --disk-size=40g \
-               -n 3
+  --kubernetes-version=v1.30 \
+  --container-runtime=containerd \
+  --cni=calico \
+  --cpus=2 --memory=6g --disk-size=80g \
+  -n 2
 ```
 
 ## Check Vms
 ```
-# Should see 3 VMs: 1 control plane, 2 workers
+# Should see 2 VMs: 1 control plane, 1 worker
 VBoxManage list vms
 ```
 
@@ -41,15 +41,15 @@ VBoxManage list vms
 ```
 minikube profile default
 
-# 3 nodes: minikube, minikube-m02, minikube-m03
+# 2 nodes: minikube, minikube-m02
 minikube status
 
-# 3 nodes with IPs on virtual box bridge net
+# 2 nodes with IPs on virtual box bridge net
 minikube node list
 
 kubectl version
 
-# 1 profile "minikube" / 3 nodes
+# 1 profile "minikube" / 2 nodes
 minikube profile list
 
 # display k8s start logs
@@ -64,4 +64,7 @@ minikube ssh
 minikube addons list
 minikube addons enable metrics-server
 minikube addons enable dashboard
+
+# Show dashboard URL
+minikube dashboard --url
 ```
