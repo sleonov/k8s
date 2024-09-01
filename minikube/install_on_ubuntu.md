@@ -1,7 +1,12 @@
-# Instructions to install on VM/Ubuntu 20
-## Update profile with alias kubectl='minikube kubectl'
+# Instructions
+Tested on Ubuntu20 running as VM
+Using virtual box as hypervisor
+CPUs: 4
+RAM: 16GB
+Disk: 200GB
 
-## Install kubectl (or use alias)
+## Update user's profile 
+```alias kubectl='minikube kubectl'```
 
 ## Install minikube
 ```
@@ -12,12 +17,14 @@ sudo usermod -aG docker $USER
 ```
 
 ## Install with virtualbox as driver (default profile)
-2 worker nodes, use this:
-
+2 Worker nodes, each with:
+CPUs: 2
+RAM: 4GB
+Disk: 40GB
 ```
 sudo apt install virtualbox
 minikube start --driver=virtualbox \
-               --kubernetes-version=v1.28.3 \
+               --kubernetes-version=v1.30 \
                --container-runtime=containerd \
                --cni=calico \
                --cpus=2 --memory=4g --disk-size=40g \
@@ -25,25 +32,23 @@ minikube start --driver=virtualbox \
 ```
 
 ## Check Vms
-
-```
-VBoxManage list vms # 1 control plane vm, 2 worker VMs
-```
+```VBoxManage list vms```
+Should see 3 VMs: 1 control plane, 2 workers
 
 ## Verify installation
 ```
-minikube profile virtualbox
-minikube status
-minikube node list
-kubectl version
-minikube profile list
+minikube profile default
+minikube status # 3 nodes: minikube, minikube-m02, minikube-m03
+minikube node list # 3 nodes with IPs on virtual box bridge net
+kubectl version 
+minikube profile list # 1 profile "minikube" / 3 nodes
 minikube logs # display k8s start logs
-minikube ssh # login for debugging
+minikube ssh # login for debugging to control plane node
 ```
 
 ## Install add-ons
 ```
 minikube addons list
 minikube addons enable metrics-server
-```
 minikube addons enable dashboard
+```
