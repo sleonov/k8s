@@ -32,18 +32,31 @@ minikube start --driver=virtualbox \
 ```
 
 ## Check Vms
-```VBoxManage list vms```
-Should see 3 VMs: 1 control plane, 2 workers
+```
+# Should see 3 VMs: 1 control plane, 2 workers
+VBoxManage list vms
+```
 
 ## Verify installation
 ```
 minikube profile default
-minikube status # 3 nodes: minikube, minikube-m02, minikube-m03
-minikube node list # 3 nodes with IPs on virtual box bridge net
-kubectl version 
-minikube profile list # 1 profile "minikube" / 3 nodes
-minikube logs # display k8s start logs
-minikube ssh # login for debugging to control plane node
+
+# 3 nodes: minikube, minikube-m02, minikube-m03
+minikube status
+
+# 3 nodes with IPs on virtual box bridge net
+minikube node list
+
+kubectl version
+
+# 1 profile "minikube" / 3 nodes
+minikube profile list
+
+# display k8s start logs
+minikube logs
+
+# display k8s start logs
+minikube ssh
 ```
 
 ## Install add-ons
